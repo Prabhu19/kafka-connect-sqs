@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.stream.Collectors ;
 
 import com.amazonaws.services.sqs.model.MessageAttributeValue;
-import com.nordstrom.kafka.connect.eventbus.RiderLocation;
+import com.google.protobuf.Descriptors;
 import com.google.protobuf.util.JsonFormat;
 import com.google.protobuf.InvalidProtocolBufferException;
 import org.apache.kafka.connect.data.Schema ;
@@ -120,22 +120,40 @@ public class SqsSourceConnectorTask extends SourceTask {
         }
       }
 
-      log.info("Prabhu: SQS Body: {}", body);
-      Gson gson = new Gson();
-      JsonObject jsonObject = gson.fromJson(body, JsonObject.class);
-      String snsMessage = jsonObject.get("Message").getAsString();
-      log.info("Prabhu: SNS Message: {}", snsMessage);
-      RiderLocation.Builder builder = RiderLocation.newBuilder();
-      try {
-        JsonFormat.parser().ignoringUnknownFields().merge(snsMessage, builder);
-      } catch (InvalidProtocolBufferException e) {
-        log.error("Error parsing JSON to Protobuf: {}", e.getMessage());
-        throw new RuntimeException("Error parsing JSON to Protobuf", e);
-      }
-      log.info("Prabhu: Printing the parsed protobuf message");
-      log.info(builder.build().toString());
+      if (config.getProtobufParsingEnabled()) {
 
-      RiderLocation riderLocation = builder.build();
+        log.info("Prabhu: SQS Body: {}", body);
+        Gson gson = new Gson();
+        JsonObject jsonObject = gson.fromJson(body, JsonObject.class);
+        String snsMessage = jsonObject.get("Message").getAsString();
+        log.info("Prabhu: SNS Message: {}", snsMessage);
+
+
+        String parsingClassName = config.getProtobufParsingClass();
+
+        com.google.protobuf.Message.Builder builder;
+        Descriptors.Descriptor descriptor;
+
+        try {
+          builder = DynamicProtoParser.getBuilderForClassName(parsingClassName);
+          descriptor = DynamicProtoParser.getDescriptorForClassName(parsingClassName);
+
+
+        } catch (ClassNotFoundException e) {
+          throw new RuntimeException(e);
+        }
+
+//        RiderLocation.Builder builder = RiderLocation.newBuilder();
+        try {
+          JsonFormat.parser().ignoringUnknownFields().merge(snsMessage, builder);
+        } catch (InvalidProtocolBufferException e) {
+          log.error("Error parsing JSON to Protobuf: {}", e.getMessage());
+          throw new RuntimeException("Error parsing JSON to Protobuf", e);
+        }
+        log.info("Prabhu: Printing the parsed protobuf message");
+        log.info(builder.build().toString());
+
+        com.google.protobuf.Message protobufMessage = builder.build();
 
 //      // blueapron version https://github.com/blueapron/kafka-connect-protobuf-converter
 //      try {
@@ -146,11 +164,17 @@ public class SqsSourceConnectorTask extends SourceTask {
 //        throw new RuntimeException("Proto class  not found in the classpath");
 //      }
 
-      // Confluent Version
-      ProtobufSchema protobufSchema = new ProtobufSchema(RiderLocation.getDescriptor());
-      ProtobufData protobufData = new ProtobufData();
-      SchemaAndValue schema_value = protobufData.toConnectData(protobufSchema, riderLocation);
-      return new SourceRecord(sourcePartition, sourceOffset, topic, null, Schema.STRING_SCHEMA, key, schema_value.schema(), schema_value.value());
+        // Confluent Version
+        ProtobufSchema protobufSchema = new ProtobufSchema(descriptor);
+        ProtobufData protobufData = new ProtobufData();
+        SchemaAndValue schema_value = protobufData.toConnectData(protobufSchema, protobufMessage);
+        return new SourceRecord(sourcePartition, sourceOffset, topic, null, Schema.STRING_SCHEMA, key, schema_value.schema(), schema_value.value());
+      } else {
+        return new SourceRecord(sourcePartition, sourceOffset, topic, null, Schema.STRING_SCHEMA, key, Schema.STRING_SCHEMA,
+                body, null, headers);
+      }
+
+
     } ).collect( Collectors.toList() ) ;
   }
 

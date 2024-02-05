@@ -27,6 +27,9 @@ public enum SqsConnectorConfigKeys {
   SQS_REGION("sqs.region"),
   SQS_ENDPOINT_URL("sqs.endpoint.url"),
   SQS_MESSAGE_ATTRIBUTES_ENABLED("sqs.message.attributes.enabled"),
+
+  SQS_PROTOBUF_PARSING_ENABLED("sqs.protobuf.parsing.enabled"),
+  SQS_PROTOBUF_PARSING_CLASS("sqs.protobuf.parsing.class"),
   SQS_MESSAGE_ATTRIBUTES_INCLUDE_LIST("sqs.message.attributes.include.list"),
 
   // These are not part of the connector configuration proper, but just a convenient
