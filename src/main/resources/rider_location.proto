@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package com.deliveryhero.eventbus;
+
+option java_multiple_files = true;
+option java_package = "com.nordstrom.kafka.connect.eventbus";
+
+
+message RiderLocation {
+
+  message Courier {
+    uint32 id = 1;
+    uint32 user_id = 2;
+  }
+
+  message Location {
+    double latitude = 1;
+    double longitude = 2;
+  }
+
+  message Battery {
+    string status = 1;
+    int32 level = 2;
+  }
+
+  message Network_info {
+    string type = 1;
+    string provider = 2;
+  }
+
+  message Connection_info {
+    Network_info network_info = 1;
+  }
+
+  message Metadata {
+    double speed = 1;
+    double heading = 2;
+    double accuracy = 3;
+    bool mock_location = 4;
+    Battery battery = 5;
+    Connection_info connection_info = 6;
+    string device_id = 7;
+    string platform = 8;
+    string roadrunner_version = 9;
+  }
+
+  message Data {
+    Courier courier = 1;
+    Location location = 2;
+    Metadata metadata = 3;
+  }
+
+  string type = 1;
+  Data data = 2;
+  string country_code = 3;
+  string timestamp = 4;
+  uint32 version = 5;
+
+}
