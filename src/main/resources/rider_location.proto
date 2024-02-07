@@ -24,6 +24,8 @@ message RiderLocation {
   }
 
   message Network_info {
+    string type = 1;
+    string provider = 2;
   }
 
   message Connection_info {

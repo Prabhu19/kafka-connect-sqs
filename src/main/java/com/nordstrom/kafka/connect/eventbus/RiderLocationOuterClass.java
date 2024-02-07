@@ -65,31 +65,32 @@ public final class RiderLocationOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\'src/main/resources/rider_location.prot" +
-      "o\022\031com.deliveryhero.eventbus\"\212\007\n\rRiderLo" +
+      "o\022\031com.deliveryhero.eventbus\"\252\007\n\rRiderLo" +
       "cation\022\014\n\004type\030\001 \001(\t\022;\n\004data\030\002 \001(\0132-.com" +
       ".deliveryhero.eventbus.RiderLocation.Dat" +
       "a\022\024\n\014country_code\030\003 \001(\t\022\021\n\ttimestamp\030\004 \001" +
       "(\t\022\017\n\007version\030\005 \001(\r\032&\n\007Courier\022\n\n\002id\030\001 \001" +
       "(\r\022\017\n\007user_id\030\002 \001(\r\032/\n\010Location\022\020\n\010latit" +
       "ude\030\001 \001(\001\022\021\n\tlongitude\030\002 \001(\001\032(\n\007Battery\022" +
-      "\016\n\006status\030\001 \001(\t\022\r\n\005level\030\002 \001(\005\032\016\n\014Networ" +
-      "k_info\032^\n\017Connection_info\022K\n\014network_inf" +
-      "o\030\001 \001(\01325.com.deliveryhero.eventbus.Ride" +
-      "rLocation.Network_info\032\252\002\n\010Metadata\022\r\n\005s" +
-      "peed\030\001 \001(\001\022\017\n\007heading\030\002 \001(\001\022\020\n\010accuracy\030" +
-      "\003 \001(\001\022\025\n\rmock_location\030\004 \001(\010\022A\n\007battery\030" +
-      "\005 \001(\01320.com.deliveryhero.eventbus.RiderL" +
-      "ocation.Battery\022Q\n\017connection_info\030\006 \001(\013" +
-      "28.com.deliveryhero.eventbus.RiderLocati" +
-      "on.Connection_info\022\021\n\tdevice_id\030\007 \001(\t\022\020\n" +
-      "\010platform\030\010 \001(\t\022\032\n\022roadrunner_version\030\t " +
-      "\001(\t\032\323\001\n\004Data\022A\n\007courier\030\001 \001(\01320.com.deli" +
-      "veryhero.eventbus.RiderLocation.Courier\022" +
-      "C\n\010location\030\002 \001(\01321.com.deliveryhero.eve" +
-      "ntbus.RiderLocation.Location\022C\n\010metadata" +
-      "\030\003 \001(\01321.com.deliveryhero.eventbus.Rider" +
-      "Location.MetadataB(\n$com.nordstrom.kafka" +
-      ".connect.eventbusP\001b\006proto3"
+      "\016\n\006status\030\001 \001(\t\022\r\n\005level\030\002 \001(\005\032.\n\014Networ" +
+      "k_info\022\014\n\004type\030\001 \001(\t\022\020\n\010provider\030\002 \001(\t\032^" +
+      "\n\017Connection_info\022K\n\014network_info\030\001 \001(\0132" +
+      "5.com.deliveryhero.eventbus.RiderLocatio" +
+      "n.Network_info\032\252\002\n\010Metadata\022\r\n\005speed\030\001 \001" +
+      "(\001\022\017\n\007heading\030\002 \001(\001\022\020\n\010accuracy\030\003 \001(\001\022\025\n" +
+      "\rmock_location\030\004 \001(\010\022A\n\007battery\030\005 \001(\01320." +
+      "com.deliveryhero.eventbus.RiderLocation." +
+      "Battery\022Q\n\017connection_info\030\006 \001(\01328.com.d" +
+      "eliveryhero.eventbus.RiderLocation.Conne" +
+      "ction_info\022\021\n\tdevice_id\030\007 \001(\t\022\020\n\010platfor" +
+      "m\030\010 \001(\t\022\032\n\022roadrunner_version\030\t \001(\t\032\323\001\n\004" +
+      "Data\022A\n\007courier\030\001 \001(\01320.com.deliveryhero" +
+      ".eventbus.RiderLocation.Courier\022C\n\010locat" +
+      "ion\030\002 \001(\01321.com.deliveryhero.eventbus.Ri" +
+      "derLocation.Location\022C\n\010metadata\030\003 \001(\01321" +
+      ".com.deliveryhero.eventbus.RiderLocation" +
+      ".MetadataB(\n$com.nordstrom.kafka.connect" +
+      ".eventbusP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -124,7 +125,7 @@ public final class RiderLocationOuterClass {
     internal_static_com_deliveryhero_eventbus_RiderLocation_Network_info_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_com_deliveryhero_eventbus_RiderLocation_Network_info_descriptor,
-        new java.lang.String[] { });
+        new java.lang.String[] { "Type", "Provider", });
     internal_static_com_deliveryhero_eventbus_RiderLocation_Connection_info_descriptor =
       internal_static_com_deliveryhero_eventbus_RiderLocation_descriptor.getNestedTypes().get(4);
     internal_static_com_deliveryhero_eventbus_RiderLocation_Connection_info_fieldAccessorTable = new
